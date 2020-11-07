@@ -1,7 +1,11 @@
+# SETUP
+# 
+# Open the Chrome tab with the game started to the left half of the screen
+# Run this program
+# As simple as that
+
 import time
 import numpy as np
-from PIL import ImageGrab
-import cv2
 import pyautogui as gui
 import math
 
@@ -36,8 +40,7 @@ def get_speeds():
     return speeds
 
 # Consts
-SW = 1980
-SH = 1080
+SW, SH = gui.size()
 
 px = 170
 py = 817
@@ -45,7 +48,6 @@ py = 817
 H = 100
 
 hoop_colour_red = [255, 53, 53]
-hoop_colour_yellow = [253, 220, 68]
 skin_colour = [255, 175, 159]
 
 auto_targeting = True
@@ -54,20 +56,17 @@ while True:
     tx = -1
     ty = -1
 
-    # print("Checking speeds")
-    # gay = 0
-    # speeds = [False, False, False]
-    # while gay < 5 and speeds == [False, False, False]:
-    #     speeds = get_speeds()
-    #     gay += 1
-    # print("Speeds are: {}".format(speeds))
+    gay = 0
+    speeds = [False, False, False]
+    while gay < 5 and speeds == [False, False, False]:
+        speeds = get_speeds()
+        gay += 1
 
-    # direction = sum([1 if i else 0 for i in speeds])
-    # direction *= -1 if speeds[2] else (1 if speeds[0] else 0)
-    direction = 0
+    direction = sum([1 if i else 0 for i in speeds])
+    direction *= -1 if speeds[2] else (1 if speeds[0] else 0)
 
     if auto_targeting:
-        img = np.array(gui.screenshot(region=(0, 0, 1000, 1080)))
+        img = np.array(gui.screenshot(region=(0, 0, SW/2, SH-50)))
 
         # Searching from up to down, column wise
         for i in range(len(img[0])):
@@ -84,7 +83,7 @@ while True:
             print("Something went wrong, exiting")
             break
     else:
-        input("Place mouse over the target center and press [ENTER]")
+        input("Place mouse over the middle of the hoop and press [ENTER]")
         (tx, ty) = gui.position()
     
     a = (( tx-px )/( 2*( math.sqrt(H) + math.sqrt( py + H - ty ) )))**2
@@ -92,5 +91,5 @@ while True:
     my = ty - H + 2*a
 
     gui.click(x=mx-direction*40, y=my)
-    # if auto_targeting:
-        # time.sleep(1)
+    if auto_targeting:
+        time.sleep(7)
