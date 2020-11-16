@@ -91,5 +91,7 @@ while True:
     my = ty - H + 2*a
 
     gui.click(x=mx-direction*40, y=my)
+    time.sleep(3)
+    gui.click()
     if auto_targeting:
-        time.sleep(7)
+        time.sleep(4)
