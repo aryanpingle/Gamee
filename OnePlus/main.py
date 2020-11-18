@@ -12,7 +12,7 @@
 
 # This code is VERY BAD, NO GOOD< TRASH. There are many better ways to do it, and I chose the easiest path that I could understand.
 
-max_plays = 20
+max_plays = 100
 
 import pyautogui as gui
 import numpy as np
